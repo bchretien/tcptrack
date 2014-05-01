@@ -1,0 +1,18 @@
+Steve Benson <steve@rhythm.REMOVE_THIS_SPAMTRAP.cx>
+	Primary author
+
+Leo Costela <costela@debian.remove-this-part.org>
+	Debian packages, bugfixes, column total feature
+
+Dries Verachtert <dries@ulyssis.org>
+Christian Weiss <cwei@gmx.net>
+	Fixes for gcc 4.1+
+
+Adam Osuchowski <adwol@zonk.pl>
+	802.1q VLAN support
+
+Zach Bagnall <yem@y3m.net>
+	Bytes transferred sort option and sort option cycling/display
+
+Kristof Provost <Kristof@sigsegv.be>
+	IPv6 support and numerous cleanups and fixes

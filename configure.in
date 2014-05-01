@@ -1,0 +1,107 @@
+dnl Process this file with autoconf to produce a configure script.
+
+AC_INIT(tcptrack, 1.4.2)
+
+# Init automake
+AM_INIT_AUTOMAKE
+AM_MAINTAINER_MODE
+AM_CONFIG_HEADER(config.h)
+
+dnl Checks for programs.
+AC_PROG_CXX
+AC_PROG_CC
+AC_PROG_INSTALL
+
+dnl use C++ to perform the tests for headers/libs
+AC_LANG_CPLUSPLUS
+
+dnl see if this is a big/little endian arch
+AC_C_BIGENDIAN
+
+dnl See if the compiler accepts -pthread... needed for BSDs
+dnl AC_PTHREAD_FREEBSD
+
+dnl Checks for libraries.
+AC_CHECK_LIB(socket,socket)
+AC_CHECK_LIB(socket,gethostbyname)
+AC_CHECK_LIB(nsl,gethostbyname)
+AC_CHECK_LIB(nsl,inet_addr)
+AC_CHECK_LIB(ncurses, initscr)
+AC_CHECK_LIB(pcap, pcap_open_live)
+AC_CHECK_LIB(pthread, pthread_create)
+AC_CHECK_LIB(rt, nanosleep)
+
+dnl Checks for header files.
+AC_CHECK_HEADERS(pcap.h pcap/pcap.h pthread.h curses.h hash_map ext/hash_map)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+
+dnl Checks for library functions.
+AC_HEADER_STDC
+
+for hdr in unistd.h pthread.h curses.h
+do
+	safe=`echo "$hdr" | sed 'y%./+-%__p_%'`
+	eval "v=\$ac_cv_header_$safe"
+	#echo "HDR: $hdr"
+	#echo "VEE: $v"
+	if test "$v" = "no" ; then
+		AC_MSG_ERROR([Cannot find $hdr header file])
+	fi
+done
+
+for lib in ncurses_initscr pcap_pcap_open_live ncurses_initscr
+do
+	eval "v=\$ac_cv_lib_$lib"
+	l=`echo $lib|awk -F '_' '{print $1}'`
+	if test "$v" = "no" ; then
+		AC_MSG_ERROR([Connot find $l library])
+	fi
+done
+
+if test "$ac_cv_header_pcap_h" = "no" -a "$ac_cv_header_pcap_pcap_h" = "no"; then
+	AC_MSG_ERROR([Cannot find either pcap/pcap.h or pcap.h. You may have to install your operating system's libpcap development packages or install libpcap from source. Also see README.])
+fi
+
+if test "$ac_cv_header_hash_map" = "no" -a "$ac_cv_header_ext_hash_map" = "no"; then
+	AC_MSG_ERROR([Cannot find either ext/hash_map.h or hash_map.h. This file should have come with your compiler. If not, your compiler may not support the STL hash map extension.])
+fi
+
+
+AC_MSG_CHECKING([if the __gnu_cxx namespace exists])
+
+eval "ac_gnuextns=no"
+
+AC_COMPILE_IFELSE(
+[
+#include <ext/hash_map>
+using namespace __gnu_cxx;
+int main() { }
+],
+eval "ac_gnuextns=yes",
+)
+
+AC_COMPILE_IFELSE(
+[
+#include <hash_map>
+using namespace __gnu_cxx;
+int main() { }
+],
+eval "ac_gnuextns=yes",
+)
+
+if eval "test \"`echo $ac_gnuextns`\" = yes"; then
+	AC_MSG_RESULT(yes)
+	AC_DEFINE(GNU_CXX_NS,1,"descr")
+else
+	AC_MSG_RESULT(no)
+fi
+
+
+
+dnl AC_OUTPUT(Makefile src/Makefile)
+
+dnl AC_CONFIG_HEADERS(config.h:config.in)
+
+AC_OUTPUT(Makefile src/Makefile)

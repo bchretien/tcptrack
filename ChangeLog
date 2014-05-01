@@ -1,0 +1,95 @@
+* 1.4.0 released 2010-sep-28
+- Incorporated patches from Kristof Provost for IPv6 support and numerous
+  cleanups and bug fixes. An issue where tcptrack would run but not display
+  any connections should now be fixed. Thanks to Ronald W. Henderson for
+  help testing and debugging.
+
+* 1.3.0 released 2007-feb-06
+- New sort options: unsorted, sort by rate, sort by byte count. Thanks to
+  Zach Bagnall for the patch.
+
+* 1.2.0 released 2006-dec-20
+- Fixes for compiling on gcc 4.1+ (thanks to Dries Verachtert, Christian
+  Weiss)
+- 802.1q VLAN support (thanks to Adam Osuchowski)
+
+* 1.1.5 released 2005-mar-12
+- Fixed a bug where tcptrack would crash due to a floating point exception
+  if it sniffed TCP packets with source or destination ports of 0.
+
+* 1.1.4 released 2004-oct-10
+- Fixed a memory leak in the TCPConnection class.
+
+* 1.1.3 released 2004-aug-16 
+- Added a total for the speed column at the bottom of the display. Thanks to
+  Leo Costela for the patch.
+- Fixed a few minor user interface bugs (mostly exposed by the above patch).
+
+* 1.1.2 released 2004-jun-03
+- Fixed assertion an assertion failure (in IPv4Packet.cc) bug.
+- tcptrack can now run on interfaces with no IPv4 addresses (ie, stealth
+  interfaces).
+- Fixed a few crashes and assertion failures on Mac OSX and FreeBSD caused
+  by missing pthread_*_init calls. Thanks to Chuck Schied for the patch.
+- Added a timeout for connections in the CLOSING state. Connections may get
+  stuck in that state due to dropped packets, timeouts by the peers, or
+  there may be a bug in the TCPConnection state machine code that I haven't
+  found yet.
+- ChangeLog is now a regular ChangeLog, not a development log. The contents
+  of this file were previously in the NEWS file. NEWS will now contain
+  the same stuff that's on the web page.
+
+* 1.1.1 released 2004-may-10
+- Fixed problem where tcptrack would silently not work on certain ppp
+  connections (a.k.a. debian bug #245227)
+- Added support for NULL and RAW pcap interface types. tcptrack should now
+  work on all linux PPP, ethernet, tun/tap and local loopback interfaces.
+- tcptrack now compiles properly with gcc 3.4. Thanks to Jim Gifford.
+- Added EXAMPLES section to man page and a few extra notes to man page about
+  guessing, pause/sort options.
+
+* 1.1.0 released 2004-apr-18 
+- Fixed problems with crashes on FreeBSD and Solaris. Stack sizes of certain
+  threads were too small (adjustable in defs.h).
+
+* 1.1.beta1 released 2004-mar-31
+- Idle time can be computed & updated more than once a second now and may be 
+  more accurate under heavy load. See the man page for more info.
+- Idle time now displays hours/minutes instead of always seconds.
+- tcptrack can now see connections that were started before tcptrack was.
+- Added -d option to disable connection detection (above).
+- List of connections is now scrollable with arrow keys. 
+- Added pause/unpause and enable/disable sort options
+- Added status display for number of connections shown and total and pause /
+  sort options
+- tcptrack now exits cleaner
+- internal data structures changed to make tcptrack more CPU efficient.
+- lots of internal code changes to make code more organized and reusable.
+- More error handling added.
+- Added -p option to enable/disable promisc mode
+- Sorting is now done by speed first, least idle time second. Before, idle 
+  time was not factored in the sorting.
+- Stack size of each thread reduced. configurable in defs.h. tcptrack now
+  uses a lot less virtual address space.
+
+* 1.0.2 released 2003-dec-04
+- Fixed some Solaris build issues
+- configure script updated 
+- Fixed assert compile problem on some systems
+
+* 1.0.1 released 2003-nov-27
+- Fixed a memory leak
+- fixed a problem that would cause tcptrack to segfault under heavy load
+- tcptrack no longer grabs packet payloads off of the network, making it
+  more efficient (especially in terms of memory under heavy load).
+- FreeBSD (and probably other BSD) timing issues have been fixed.
+- New timing options controllable in defs.h
+- tcptrack only works on ethernet interfaces for now. It will now fail to
+  start up on non-ethernet interfaces and print an error.
+- tcptrack still won't compile on Solaris. I'm working on getting access to
+  a Solaris machine to test on.
+
+* 1.0.0 released 2003-nov-23
+- First public release.
+
+

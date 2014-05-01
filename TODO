@@ -1,0 +1,122 @@
+
+-- done for 1.1.2 ---
+
+Craig Raw <craig@quirk.co.za>
+	assert failure on IPv4Packet.cc:19
+	X> drop bad packets earlier in the code
+
+Ronald W. Henderson <rwhalb@nycap.rr.com>
+	be able to run and use a filter on an iface with no IPv4 Addr
+	X> see how tcpdump calls pcap_compile without the net arg
+	if we weren't given a filter, dont' try to compile one
+	X> already added an if() around the filter compile code
+
+James E. Hopper <JAMES.E.HOPPER@saic.com>
+Chuck Schied <chuck@randomnimity.org>
+	missing pthread_*_init calls... causes probs on OSX and FBSD. 
+	X> Chuck sent a patch. apply.
+
+Niels Burmeister <niels.burmeister@gmx.de>
+	seeing connections stuck in the CLOSING state. 
+	X> add timeout?
+	X> review TCPConnection state machine code
+
+Jay James <jjames@memec.com>
+249186@bugs.debian.org
+anthony@derobert.net
+	0.6.2 compile probs... already documented in README
+	-> make configure barf if broken libpcap 0.6.2 or earlier detected
+
+* make ChangeLog a change log, NEWS is for news.
+
+
+
+-- done for 1.1.0 --
+
+* make configure see if 'using namespace __gnu_cxx;' works... then ifdef to
+	taste.
+
+* add NLP parameter to NetworkPacket::newPacket
+
+* add code to transfer exceptions between threads (to TCPTrack)
+
+* make configure check for stl includes
+
+* only works on ethernet interfaces
+	works on linux_sll ifaces now... (ppp,tun,lo)
+
+* abort if terminal is too small
+
+* clopt: closed connections remove timeout
+
+* make real hash funcs for Guesser and TCContainer
+
+* Be able to pick up connections that we didn't see the SYN for
+
+* make UI scrollable list, using curses pad, maybe
+
+* icmd: s: enable/disable sorting
+
+* icmd: p: don't remove closed cons, no new cons
+
+* clean up status display (sorted/paused flags)
+
+* dont call exit() from within objects, throw an exception or something
+
+* clean close down... stop curses nicely
+
+* put stuff in main in an app class
+
+* Idle time display hours/minutes
+
+
+
+-- >= 1.2.0 ----
+
+separate up/down speeds
+
+calculate averages over an arbitrary range of time... or lifetime of conn.
+
+bits/bytes sec flag
+
+exit immediately
+
+allow averages to be calculated over an arbitrary period (extend fastmode)
+
+clopt: no sorting
+
+clopt: units (B/s KB/s) -- probably need gui
+
+complete error checking on every sys/lib call
+ -- PacketBuffer and Sniffer have this, others can wait.
+
+display all non-TCP/IPv4 bandwidth usage somewhere
+
+tcp round trip time (latency)
+
+network hops between endpoints (ttl ip field)
+
+replay tcpdump captures
+
+make UI occupy full window size horizontally
+
+make debug log allow format string like printf
+
+make configure look for pcap/pcap.h and if found, add -I/usr/include/pcap or
+something like that to compilation. might fix redhat packaging issue
+
+duplicate excess -I in compilation
+
+etherreal extension?
+
+GUI
+
+use etherreal app payload interpreters
+
+logging
+
+DNS lookups
+
+html output?
+
+bi-directional bandwidth counters

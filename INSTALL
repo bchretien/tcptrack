@@ -1,0 +1,42 @@
+Requirements
+------------
+	
+	libpcap 0.7.2 or higher. 
+
+	You can use earlier versions if you hack your libpcap include files
+	to fix a minor C++ bug in the pcap.h header file as described in
+	README.
+
+
+Building and Installing
+-----------------------
+
+	To build and install:
+
+		./configure
+		make
+		make install
+
+	Run ./configure --help to see a list of options to change things
+	like the installation directory.
+
+	If configure tells you you don't have pcap.h when you do, or if make
+	fails with previous declaration errors, see README.
+
+Using
+-----
+
+	To run tcptrack, you need to specify an interface for it to sniff:
+
+		tcptrack -i eth0
+
+	You can also provide a pcap filter expression:
+	
+		tcptrack -i eth0 src or dst 192.168.33.92 and port 80
+		
+	That will make tcptrack only monitor web connections to or from
+	192.168.33.92 on eth0. The expression syntax is the same as you'd
+	use for tcpdump and possibly other pcap-based sniffers.
+	
+	While in tcptrack, hit 'q' to exit. See the man page, tcptrack(1),
+	for more information on options and interactive commands.
