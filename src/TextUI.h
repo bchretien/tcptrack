@@ -22,7 +22,7 @@
 #ifndef TEXTUI_H
 #define TEXTUI_H 1
 
-#define _BSD_SOURCE 1
+#define _DEFAULT_SOURCE 1
 #define _REENTRANT
 #include <curses.h>
 #include <pthread.h>

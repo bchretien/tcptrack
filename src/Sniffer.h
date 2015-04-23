@@ -22,7 +22,7 @@
 #ifndef SNIFFER_H
 #define SNIFFER_H 1
 
-#define _BSD_SOURCE 1
+#define _DEFAULT_SOURCE 1
 #define _REENTRANT
 
 #ifdef HAVE_PCAP_PCAP_H

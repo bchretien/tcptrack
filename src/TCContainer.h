@@ -22,7 +22,7 @@
 #ifndef TCCONTAINER_H
 #define TCCONTAINER_H 1
 
-#define _BSD_SOURCE 1
+#define _DEFAULT_SOURCE 1
 #define _REENTRANT
 #include <sys/types.h>
 #include <pthread.h>

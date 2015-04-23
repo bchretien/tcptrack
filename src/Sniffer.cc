@@ -20,7 +20,7 @@
  *  
  */
 #include "../config.h"
-#define _BSD_SOURCE 1
+#define _DEFAULT_SOURCE 1
 #define _REENTRANT
 #include <pthread.h>
 #include <cassert>

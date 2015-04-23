@@ -19,7 +19,7 @@
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
  *  
  */
-#define _BSD_SOURCE 1
+#define _DEFAULT_SOURCE 1
 #define _REENTRANT
 #include "../config.h" // for PACKAGE and VERSION
 #include <stdio.h>
