@@ -20,6 +20,7 @@
  *  
  */
 #define _DEFAULT_SOURCE 1
+#define _BSD_SOURCE 1
 #define _REENTRANT
 #include "../config.h" // for PACKAGE and VERSION
 #include <stdio.h>

@@ -20,6 +20,7 @@
  *  
  */
 #define _DEFAULT_SOURCE 1
+#define _BSD_SOURCE 1
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
