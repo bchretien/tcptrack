@@ -399,12 +399,12 @@ void TextUI::print_bps(int Bps)
 {
 	if( Bps < 1024 )
 		printw("%d B/s",Bps);
-	if( Bps >= 1024 && Bps < 1024*1024 )
+	else if(Bps < 1024*1024 )
 		printw("%d KB/s",Bps/1024);
-	if( Bps >= 1024*1024 && Bps <= 99999999 )
+	else if(Bps < 1024*1024*1024 )
 		printw("%d MB/s",Bps/(1024*1024));
-	if( Bps > 99999999 ) // not enough room to display it
-		printw("LUDICROUS"); // LUDICROUS SPEED!!
+	else
+		printw("%d GB/s",Bps/(1024*1024*1024));
 }
 
 // reset the terminal. used only for unclean exits.
