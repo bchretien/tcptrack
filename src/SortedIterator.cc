@@ -52,6 +52,8 @@ void SortedIterator::sort( int sort_type )
 			qsort(cons,numcons,sizeof(TCPConnection *),compare_rate);
 		else if( sort_type == SORT_BYTES )
 			qsort(cons,numcons,sizeof(TCPConnection *),compare_bytes);
+		else if( sort_type == SORT_IDLE )
+			qsort(cons,numcons,sizeof(TCPConnection *),compare_idle);
 	}
 }
 
@@ -127,4 +129,22 @@ int compare_bytes(const void *c1, const void *c2)
 		else
 			return 0;
 	}
+}
+
+// this is a callback function used from qsort in sort().
+// it performs the comparison of the TCPConnection objects based on the idle time.
+int compare_idle(const void *c1, const void *c2)
+{
+	TCPConnection * con1;
+	TCPConnection * con2;
+
+	con1=* (TCPConnection **) c1;
+	con2=* (TCPConnection **) c2;
+
+	if( con1->getIdleSeconds() < con2->getIdleSeconds() )
+		return 1;
+	else if( con1->getIdleSeconds() > con2->getIdleSeconds() )
+		return -1;
+	else
+		return 0;
 }

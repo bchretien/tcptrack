@@ -1,0 +1,8 @@
+*.o
+Makefile
+/config.h
+/config.log
+/config.status
+src/.deps/*
+/src/tcptrack
+/stamp-h1

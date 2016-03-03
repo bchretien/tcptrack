@@ -25,12 +25,14 @@
 #define SORT_UN 1
 #define SORT_RATE 2
 #define SORT_BYTES 3
+#define SORT_IDLE 4
 
 class TCContainer;
 class TCPConnection;
 
 int compare_rate(const void *, const void *);
 int compare_bytes(const void *, const void *);
+int compare_idle(const void *, const void *);
 
 class SortedIterator
 {
