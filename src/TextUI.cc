@@ -162,6 +162,9 @@ void TextUI::displayer_run()
 						sort_type=SORT_BYTES;
 						break;
 					case SORT_BYTES:
+						sort_type=SORT_IDLE;
+						break;
+					case SORT_IDLE:
 						sort_type=SORT_UN;
 						break;
 				}
@@ -387,6 +390,12 @@ void TextUI::drawui()
 			printw("S");
 			attroff(A_UNDERLINE);
 			printw("orted by bytes");
+			break;
+       case SORT_IDLE:
+			attron(A_UNDERLINE);
+			printw("S");
+			attroff(A_UNDERLINE);
+			printw("orted by idle");
 			break;
 	}
 
