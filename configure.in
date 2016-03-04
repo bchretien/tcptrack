@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(tcptrack, 1.4.2)
+AC_INIT(tcptrack, 1.4.3)
 
 # Init automake
 AM_INIT_AUTOMAKE
