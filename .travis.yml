@@ -1,0 +1,14 @@
+sudo: false
+addons:
+  apt:
+    packages:
+      - libpcap-dev
+
+language: cpp
+compiler:
+  - clang
+  - gcc
+
+script:
+  - ./configure
+  - make
