@@ -313,9 +313,9 @@ void TextUI::drawui()
 		move(row,58);
 		if( ic->getIdleSeconds() < 60 )
 			printw("%ds",ic->getIdleSeconds());
-		else if( ic->getIdleSeconds() > 59 ) 
+		else if( ic->getIdleSeconds() < 3600 ) 
 			printw("%dm",ic->getIdleSeconds()/60);
-		else if( ic->getIdleSeconds() > 3559 )
+		else
 			printw("%dh",ic->getIdleSeconds()/3600);
 
 		move(row,63);
