@@ -312,11 +312,11 @@ void TextUI::drawui()
 
 		move(row,58);
 		if( ic->getIdleSeconds() < 60 )
-			printw("%ds",ic->getIdleSeconds());
+			printw("%ds",(int)(ic->getIdleSeconds()));
 		else if( ic->getIdleSeconds() < 3600 ) 
-			printw("%dm",ic->getIdleSeconds()/60);
+			printw("%dm",(int)(ic->getIdleSeconds()/60));
 		else
-			printw("%dh",ic->getIdleSeconds()/3600);
+			printw("%ldh",(long)(ic->getIdleSeconds()/3600));
 
 		move(row,63);
 		if( ic->activityToggle() )
