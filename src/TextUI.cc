@@ -258,7 +258,7 @@ void TextUI::drawui()
 
 	i->rewind();
 
-	int Bps_total=0; // the total speed
+	unsigned long long Bps_total=0; // the total speed
 	while( TCPConnection *ic=i->getNext() )
 		Bps_total+=ic->getPayloadBytesPerSecond();		
 
@@ -404,7 +404,7 @@ void TextUI::drawui()
 }
 
 // display the speed with the right format
-void TextUI::print_bps(int Bps)
+void TextUI::print_bps(unsigned long long Bps)
 {
 	if( Bps < 1024 )
 		printw("%d B/s",Bps);
@@ -413,7 +413,7 @@ void TextUI::print_bps(int Bps)
 	else if(Bps < 1024*1024*1024 )
 		printw("%d MB/s",Bps/(1024*1024));
 	else
-		printw("%d GB/s",Bps/(1024*1024*1024));
+		printw("%.2lf GB/s", double(Bps)/(1024*1024*1024));
 }
 
 // reset the terminal. used only for unclean exits.
