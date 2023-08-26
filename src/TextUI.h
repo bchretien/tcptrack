@@ -52,7 +52,7 @@ public:
 	void displayer_run();
 private:
 	void drawui(); // draw the screen.
-	void print_bps(int); // display the speed with the right format
+	void print_bps(unsigned long long); // display the speed with the right format
 
 	bool run_displayer;
 

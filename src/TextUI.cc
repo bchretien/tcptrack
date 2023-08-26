@@ -1,4 +1,4 @@
-/* 
+/*
  *  Ths code in this file is part of tcptrack. For more information see
  *    http://www.rhythm.cx/~steve/devel/tcptrack
  *
@@ -8,16 +8,16 @@
  *  under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your
  *  option) any later version.
- *   
+ *
  *  tcptrack is distributed in the hope that it will be useful, but
  *  WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with GNU Make; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *  
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 #include "TextUI.h"
 #include <stdio.h>
@@ -30,7 +30,7 @@
 #include "TCPTrack.h"
 #include "GenericError.h"
 
-extern TCPTrack *app; 
+extern TCPTrack *app;
 
 TextUI::TextUI( TCContainer *c )
 {
@@ -62,7 +62,7 @@ void TextUI::init()
 	int x,y;
 	getmaxyx(w,y,x); // this is an ncurses macro
 
-	if( x<80 ) 
+	if( x<80 )
 		throw GenericError("tcptrack requires a screen at least 80 columns wide to run.");
 
 	if( y<3 )
@@ -73,7 +73,7 @@ void TextUI::init()
 	bottom=y;
 
 
-	// 
+	//
 	// Set up and run the displayer thread.
 	//
 
@@ -95,15 +95,15 @@ void TextUI::init()
 void TextUI::stop()
 {
 	pthread_mutex_lock(&state_mutex);
-	if( state != USTATE_RUNNING ) 
+	if( state != USTATE_RUNNING )
 	{
 		pthread_mutex_unlock(&state_mutex);
 		return;
 	}
 	state=USTATE_STOPPING;
-	pthread_mutex_unlock(&state_mutex);	
+	pthread_mutex_unlock(&state_mutex);
 
-	// now that state is set to USTATE_STOPPING, 
+	// now that state is set to USTATE_STOPPING,
 	// the display draw loop will see this and exit. just wait for it.
 	pthread_join(displayer_tid,NULL);
 
@@ -137,12 +137,12 @@ void TextUI::displayer_run()
 		if( rv )
 		{
 			int c = getch();
-			if( c==KEY_DOWN ) 
+			if( c==KEY_DOWN )
 			{
 				++doffset;
 				// this is checked for sanity later
 			}
-			else if( c==KEY_UP ) 
+			else if( c==KEY_UP )
 			{
 				if( doffset>0 )
 					--doffset;
@@ -171,7 +171,7 @@ void TextUI::displayer_run()
 			}
 			else if( c=='p' )
 			{
-				if( paused==true ) 
+				if( paused==true )
 				{
 					// going from paused to unpaused
 					paused=false;
@@ -194,7 +194,7 @@ void TextUI::displayer_run()
 		{
 			if( container->numConnections()>0 )
 			{
-				if( doffset >= container->numConnections() ) 
+				if( doffset >= container->numConnections() )
 					doffset = container->numConnections()-1;
 			}
 			else
@@ -204,7 +204,7 @@ void TextUI::displayer_run()
 		}
 
 		// if we aren't reusing an old iterator (ie, if unpaused),
-		// get a fresh one.		
+		// get a fresh one.
 		if( iter==NULL )
 			iter=container->getSortedIteratorPtr();
 
@@ -212,7 +212,7 @@ void TextUI::displayer_run()
 
 		if( paused==false )
 		{
-			// gonna get a new one next time if not paused... 
+			// gonna get a new one next time if not paused...
 			// so can this one.
 			delete iter;
 			iter=NULL;
@@ -258,13 +258,13 @@ void TextUI::drawui()
 
 	i->rewind();
 
-	int Bps_total=0; // the total speed
+	unsigned long long Bps_total=0; // the total speed
 	while( TCPConnection *ic=i->getNext() )
-		Bps_total+=ic->getPayloadBytesPerSecond();		
+		Bps_total+=ic->getPayloadBytesPerSecond();
 
 	i->rewind();
 
-	if( sort_type != SORT_UN ) 
+	if( sort_type != SORT_UN )
 		i->sort( sort_type );
 
 	unsigned int ic_i=0; // for scrolling
@@ -292,7 +292,7 @@ void TextUI::drawui()
 		move(row,23);
 		printw("%s:%d", ic->dstAddr().ptr(), ic->dstPort());
 		if( ic->srcAddr().GetType() == 6 )
-			row--; 
+			row--;
 
 		move(row,45);
 		printw("             ");
@@ -312,11 +312,11 @@ void TextUI::drawui()
 
 		move(row,58);
 		if( ic->getIdleSeconds() < 60 )
-			printw("%ds",ic->getIdleSeconds());
-		else if( ic->getIdleSeconds() < 3600 ) 
-			printw("%dm",ic->getIdleSeconds()/60);
+			printw("%lds",ic->getIdleSeconds());
+		else if( ic->getIdleSeconds() < 3600 )
+			printw("%ldm",ic->getIdleSeconds()/60);
 		else
-			printw("%dh",ic->getIdleSeconds()/3600);
+			printw("%ldh",ic->getIdleSeconds()/3600);
 
 		move(row,63);
 		if( ic->activityToggle() )
@@ -348,7 +348,7 @@ void TextUI::drawui()
 	move(bottom-1,1);
 	if( container->numConnections() > 0 )
 		printw("Connections %d-%d of %d",doffset+1,ic_i,container->numConnections());
-	else 
+	else
 		printw("Connections 0-0 of 0");
 
 	move(bottom-1,46);
@@ -404,16 +404,16 @@ void TextUI::drawui()
 }
 
 // display the speed with the right format
-void TextUI::print_bps(int Bps)
+void TextUI::print_bps(unsigned long long Bps)
 {
 	if( Bps < 1024 )
-		printw("%d B/s",Bps);
+		printw("%lld B/s",Bps);
 	else if(Bps < 1024*1024 )
-		printw("%d KB/s",Bps/1024);
+		printw("%lld KB/s",Bps/1024);
 	else if(Bps < 1024*1024*1024 )
-		printw("%d MB/s",Bps/(1024*1024));
+		printw("%lld MB/s",Bps/(1024*1024));
 	else
-		printw("%d GB/s",Bps/(1024*1024*1024));
+		printw("%.2lf GB/s", double(Bps)/(1024*1024*1024));
 }
 
 // reset the terminal. used only for unclean exits.
